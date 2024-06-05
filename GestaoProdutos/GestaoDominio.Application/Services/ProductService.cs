@@ -36,15 +36,21 @@ namespace GestaoDominio.Application.Services
         {
             ValidateProductDates(productDto);
             var product = _mapper.Map<Product>(productDto);
+
+            product.ProductId = 0;
             await _productRepository.AddAsync(product);
+
+            productDto.ProductId = product.ProductId;
         }
 
-        public async Task UpdateAsync(ProductDto productDto)
+        public async Task<ProductDto> UpdateAsync(ProductDto productDto)
         {
             ValidateProductDates(productDto);
             var product = _mapper.Map<Product>(productDto);
             await _productRepository.UpdateAsync(product);
+            return _mapper.Map<ProductDto>(product);
         }
+
 
         public async Task DeleteAsync(int id)
         {

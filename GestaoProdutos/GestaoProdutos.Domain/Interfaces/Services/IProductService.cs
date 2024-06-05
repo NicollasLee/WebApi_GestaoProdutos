@@ -10,7 +10,7 @@ namespace GestaoProdutos.Domain.Interfaces.Services
         Task<ProductDto> GetByIdAsync(int id);
         Task<IEnumerable<ProductDto>> ListAsync(ProductQueryParams queryParams);
         Task AddAsync(ProductDto productDto);
-        Task UpdateAsync(ProductDto productDto);
+        Task<ProductDto> UpdateAsync(ProductDto productDto);
         Task DeleteAsync(int id);
     }
 

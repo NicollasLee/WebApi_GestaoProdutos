@@ -1,7 +1,7 @@
 ﻿using GestaoProdutos.Domain.Entidades;
 using GestaoProdutos.Domain.Interfaces.Repositories;
-using GestaoProdutos.Infra.DbContext;
-using System;
+using GestaoProdutos.Infra.Context;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
