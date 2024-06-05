@@ -2,6 +2,7 @@
 using GestaoProdutos.Domain.Entidades;
 using GestaoProdutos.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace GesataoProdutos.WebApi.Controllers
@@ -38,8 +39,17 @@ namespace GesataoProdutos.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] ProductDto productDto)
         {
+            if (productDto == null)
+            {
+                return BadRequest("Product data is null.");
+            }
+
             await _productService.AddAsync(productDto);
-            return CreatedAtAction(nameof(GetById), new { id = productDto.ProductId }, productDto);
+
+            // Retrieve the created product to get the generated ProductId
+            var createdProduct = await _productService.GetByIdAsync(productDto.ProductId);
+
+            return CreatedAtAction(nameof(GetById), new { id = createdProduct.ProductId }, createdProduct);
         }
 
         [HttpPut("{id}")]
@@ -47,17 +57,25 @@ namespace GesataoProdutos.WebApi.Controllers
         {
             if (id != productDto.ProductId)
             {
-                return BadRequest();
+                return BadRequest("Product ID mismatch");
             }
-            await _productService.UpdateAsync(productDto);
-            return NoContent();
+
+            try
+            {
+                var updateProduct =  await _productService.UpdateAsync(productDto);
+                return Ok(updateProduct);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             await _productService.DeleteAsync(id);
-            return NoContent();
+            return Ok("Produto deletado com sucesso.");
         }
     }
 
