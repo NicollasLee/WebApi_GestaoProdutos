@@ -46,7 +46,6 @@ namespace GesataoProdutos.WebApi.Controllers
 
             await _productService.AddAsync(productDto);
 
-            // Retrieve the created product to get the generated ProductId
             var createdProduct = await _productService.GetByIdAsync(productDto.ProductId);
 
             return CreatedAtAction(nameof(GetById), new { id = createdProduct.ProductId }, createdProduct);

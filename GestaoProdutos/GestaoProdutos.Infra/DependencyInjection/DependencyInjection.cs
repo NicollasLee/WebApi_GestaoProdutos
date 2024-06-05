@@ -1,4 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using GestaoDominio.Application.Services;
+using GestaoProdutos.Domain.Interfaces.Repositories;
+using GestaoProdutos.Domain.Interfaces.Services;
+using GestaoProdutos.Infra.Repositories;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace GestaoProdutos.Infra.DependencyInjection
 {
@@ -12,12 +16,12 @@ namespace GestaoProdutos.Infra.DependencyInjection
 
         private static void RegisterServices(IServiceCollection serviceCollection)
         {
-            //serviceCollection.AddScoped<IPersonService, PersonService>();
+            serviceCollection.AddScoped<IProductService, ProductService>();
         }
 
         private static void RegisterRepositories(IServiceCollection serviceCollection)
         {
-            //serviceCollection.AddScoped<IPersonRepository, PersonRepository>();
+            serviceCollection.AddScoped<IProductRepository, ProductRepository>();
         }
     }
 }
